@@ -26,6 +26,6 @@ datos.dis[,"cons.conf.idx"] <- cut(datos.dis$cons.conf.idx, breaks = c(-50.00, -
 #Euribor
 datos.dis[,"euribor3m"] <- cut(datos.dis$euribor3m, breaks = c(-1.00, 2.00, 3.5, 5), labels = c("low", "average", "hight"))
 #Tasa de empleo
-datos.dis[,"nr.employed"] <- cut(datos.dis$nr.employed, breaks = c(-1.00, 54.00, 56.00, 60.00), labels = c("low", "average", "high"))
+datos.dis[,"nr.employed"] <- cut(datos.dis$nr.employed, breaks = c(0, 5000, 5150, 100000), labels = c("low", "average", "high"))
 datos.dis[,"previous"] <- cut(datos.dis$previous, breaks = c(-1, 1, 2, 3, 20), labels = c("never", "occasional", "normally", "moderately"))
 
