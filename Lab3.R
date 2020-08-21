@@ -1,6 +1,8 @@
 library("ggpubr")
 library("arulesViz")
 library("dplyr")
+library("cowplot")
+
 
 #Se cargan los datos
 #datos <- read.csv('C:/Users/Will/Desktop/U/Analisis/Lab 3/bank-additional.csv', sep = ";")
@@ -8,11 +10,60 @@ datos <- read.csv('C:/bank-additional.csv', sep = ";")
 
 
 #Se borran registros con datos desconocidos del conjunto de prueba
-datos.dis <- select(datos, -y)
+datos.dis <- datos
 datos.dis <- datos.dis[apply(datos.dis!="unknown", 1, all),] %>% droplevels()
 
 
-#Se discretizan las variables cuantitativas
+#Graficos,para revisar clases en función de sus características######################################################
+
+#Age
+boxplot.age =  ggboxplot(data = datos.dis, x = "y", y = "age", color = "y", add = "jitter") + border() 
+ydens = axis_canvas(boxplot.age, axis = "y", coord_flip = TRUE) + geom_density(data = datos.dis, aes(x = age, fill = y), alpha = 0.7, size = 0.2) + coord_flip()
+boxplot.age = insert_yaxis_grob(boxplot.age, ydens, grid::unit(.2, "null"), position = "right")
+ggdraw(boxplot.age)
+
+#duration
+boxplot.duration =  ggboxplot(data = datos.dis, x = "y", y = "duration", color = "y", add = "jitter") + border() 
+ydens = axis_canvas(boxplot.duration, axis = "y", coord_flip = TRUE) + geom_density(data = datos.dis, aes(x = duration, fill = y), alpha = 0.7, size = 0.2) + coord_flip()
+boxplot.duration = insert_yaxis_grob(boxplot.duration, ydens, grid::unit(.2, "null"), position = "right")
+ggdraw(boxplot.duration)
+
+#Campaign
+boxplot.campaign =  ggboxplot(data = datos.dis, x = "y", y = "campaign", color = "y", add = "jitter") + border() 
+ydens = axis_canvas(boxplot.campaign, axis = "y", coord_flip = TRUE) + geom_density(data = datos.dis, aes(x = campaign, fill = y), alpha = 0.7, size = 0.2) + coord_flip()
+boxplot.campaign = insert_yaxis_grob(boxplot.campaign, ydens, grid::unit(.2, "null"), position = "right")
+ggdraw(boxplot.campaign)
+
+#nr.employed
+boxplot.nr.employed =  ggboxplot(data = datos.dis, x = "y", y = "nr.employed", color = "y", add = "jitter") + border() 
+ydens = axis_canvas(boxplot.nr.employed, axis = "y", coord_flip = TRUE) + geom_density(data = datos.dis, aes(x = nr.employed, fill = y), alpha = 0.7, size = 0.2) + coord_flip()
+boxplot.nr.employed = insert_yaxis_grob(boxplot.nr.employed, ydens, grid::unit(.2, "null"), position = "right")
+ggdraw(boxplot.nr.employed)
+
+#Euribor3m
+boxplot.euribor3m =  ggboxplot(data = datos.dis, x = "y", y = "euribor3m", color = "y", add = "jitter") + border() 
+ydens = axis_canvas(boxplot.euribor3m, axis = "y", coord_flip = TRUE) + geom_density(data = datos.dis, aes(x = euribor3m, fill = y), alpha = 0.7, size = 0.2) + coord_flip()
+boxplot.euribor3m = insert_yaxis_grob(boxplot.euribor3m, ydens, grid::unit(.2, "null"), position = "right")
+ggdraw(boxplot.euribor3m)
+
+
+#previous
+boxplot.previous =  ggboxplot(data = datos.dis, x = "y", y = "previous", color = "y", add = "jitter") + border() 
+ydens = axis_canvas(boxplot.previous, axis = "y", coord_flip = TRUE) + geom_density(data = datos.dis, aes(x = previous, fill = y), alpha = 0.7, size = 0.2) + coord_flip()
+boxplot.previous = insert_yaxis_grob(boxplot.previous, ydens, grid::unit(.2, "null"), position = "right")
+ggdraw(boxplot.previous)
+
+
+
+
+
+
+
+
+
+#Se discretizan las variables cuantitativas##############################################################################################
+
+
 datos.dis[,"age"] <- cut(datos.dis$age, breaks = c(15, 29, 59, 100), labels = c("young", "adult", "elderly"))
 datos.dis[,"duration"] <- cut(datos.dis$duration, breaks = c(-1, 60, 180, 480, 600, 4000), labels = c("very.short", "short", "average", "long", "very.long"))
 datos.dis[,"campaign"] <- cut(datos.dis$campaign, breaks = c(-1, 8, 16, 24, 32, 40), labels = c("less.than.eight", "nine.to.sixteen", "seventeen.to.twentyfour", "twentyfive.to.thrirtytwo", "more.than.thrirtythree"))
