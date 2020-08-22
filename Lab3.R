@@ -142,8 +142,8 @@ datos.dis$y <- as.factor(datos.dis$y)
 # Obtención de reglas "NO"
 reglas.no <- apriori(
   data = datos.dis, 
-  parameter=list(support = 0.2, minlen = 2, maxlen = 20, target="rules"),
-  appearance=list(rhs = c("y=no"))
+  parameter = list(support = 0.2, minlen = 2, maxlen = 20, target = "rules"),
+  appearance = list(rhs = c("y=no"))
 )
 
 # Obtención de reglas "SI"
@@ -160,9 +160,9 @@ reglas.si <- apriori(
 ##################################################################################################
 
 # Inspección de reglas "NO" 
-inspect(sort(x = reglas.no, decreasing = TRUE, by = "lift")[1:10])
+inspect(sort(x = reglas.no, decreasing = TRUE, by = "lift")[1:15])
 
 # Inspección de reglas "SI"
-inspect(sort(x = reglas.si, decreasing = TRUE, by = "lift")[1:10])
+inspect(sort(x = reglas.si, decreasing = TRUE, by = "lift")[1:15])
 
 
