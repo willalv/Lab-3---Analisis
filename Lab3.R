@@ -63,7 +63,7 @@ ggdraw(boxplot.previous)
 ##################################################################################################
 
 #Edad#
-datos.dis[,"age"] <- cut(datos.dis$age, breaks = c(15, 29, 59, 100), 
+datos.dis[,"age"] <- cut(datos.dis$age, breaks = c(14, 26, 59, 100), 
                          labels = c("young", "adult", "elderly"))
 
 #Duracion de la llamada#
@@ -82,7 +82,7 @@ datos.dis[,"pdays"] <- cut(datos.dis$pdays, breaks = c(-1, 7, 14, 21, 28, 999),
 
 #Tasa de variación del empleo#
 datos.dis[,"emp.var.rate"] <- cut(datos.dis$emp.var.rate, breaks = c(-4.00, -3.00, 0.00, 0.18, 1.30, 2.30), 
-                                  labels = c("very.low", "low", "average", "hight", "very.hight"))
+                                  labels = c("very.negative", "negative", "average", "positive", "very.positive"))
 
 #IPC
 datos.dis[,"cons.price.idx"] <- cut(datos.dis$cons.price.idx, breaks = c(0.00, 92.00, 94.00, 120.00), 
