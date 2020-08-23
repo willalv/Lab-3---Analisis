@@ -6,8 +6,8 @@ library("cowplot")
 
 
 # Se cargan los datos
-datos <- read.csv('C:/Users/Will/Desktop/U/Analisis/Lab 3/bank-additional.csv', sep = ";")
-#datos <- read.csv('C:/bank-additional.csv', sep = ";")
+#datos <- read.csv('C:/Users/Will/Desktop/U/Analisis/Lab 3/bank-additional.csv', sep = ";")
+datos <- read.csv('C:/bank-additional.csv', sep = ";")
 
 
 # Se borran registros con datos desconocidos del conjunto de prueba
@@ -90,15 +90,15 @@ datos.dis[,"cons.price.idx"] <- cut(datos.dis$cons.price.idx, breaks = c(0.00, 9
 
 #ICC#
 datos.dis[,"cons.conf.idx"] <- cut(datos.dis$cons.conf.idx, breaks = c(-50.00, -35.00, -30.00, -20.00, -15.00, 0.00), 
-                                   labels = c("very.hight", "hight", "normal", "low", "very.low"))
+                                   labels = c("very.high", "high", "normal", "low", "very.low"))
 
 #Euribor#
 datos.dis[,"euribor3m"] <- cut(datos.dis$euribor3m, breaks = c(-1.00, 2.00, 3.5, 5), 
-                               labels = c("low", "average", "hight"))
+                               labels = c("low", "average", "high"))
 
 #Tasa de empleo#
 datos.dis[,"nr.employed"] <- cut(datos.dis$nr.employed, breaks = c(0, 5000, 5150, 100000), 
-                                 labels = c("low", "average", "hight"))
+                                 labels = c("low", "average", "high"))
 
 #Número de contactos realizados antes de esta campaña#
 datos.dis[,"previous"] <- cut(datos.dis$previous, breaks = c(-1, 1, 2, 3, 20), 
@@ -164,5 +164,71 @@ inspect(sort(x = reglas.no, decreasing = TRUE, by = "lift")[1:15])
 
 # Inspección de reglas "SI"
 inspect(sort(x = reglas.si, decreasing = TRUE, by = "lift")[1:15])
+
+
+
+#Gráficos
+plot(reglas.no[1:20], method = "graph")
+plot(reglas.si[1:20], method = "graph")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Pevisando reglas########################
+#Regla 1 No
+nrow(
+datos.dis[
+  datos.dis$duration == "short" &
+  datos.dis$euribor3m == "high" &
+  datos.dis$previous=="never" &
+  datos.dis$cons.conf.idx=="very.high" &
+  datos.dis$nr.employed=="high" &
+  datos.dis$y == "yes",
+])
+
+# Para reglas de clase SI###########
+#Regla 1
+
+nrow(
+  datos.dis[
+    datos.dis$default == "no" &
+    datos.dis$housing == "no" &
+      datos.dis$loan == "no" &
+      datos.dis$campaign=="less.than.eight" &
+      datos.dis$pdays=="less.than.seven" &
+      datos.dis$y=="no",
+    ])
+
+
+
+nrow(
+  datos.dis[
+    datos.dis$default == "no" &
+    datos.dis$duration == "average" &
+      datos.dis$campaign=="less.than.eight" &
+      datos.dis$pdays=="less.than.seven" &
+      datos.dis$poutcome=="success" &
+      datos.dis$emp.var.rate=="negative" &
+      datos.dis$cons.conf.idx == "very.high" &
+      datos.dis$euribor3m=="low" &
+      datos.dis$y=="no",
+    ])
+
+
+
 
 
